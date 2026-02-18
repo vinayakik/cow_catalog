@@ -1,0 +1,63 @@
+<section>
+  <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+    <div>
+      <h1 class="h3 mb-0">Add New Cow</h1>
+    </div>
+    <a routerLink="/cows" class="btn btn-outline-secondary">Back to list</a>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="save()" class="card shadow-sm">
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-12 col-md-6">
+          <label class="form-label">Ear Tag *</label>
+          <input class="form-control" formControlName="earTag" placeholder="TAG-1004" />
+          @if (form.controls.earTag.invalid && form.controls.earTag.touched) {
+            <div class="text-danger small mt-1">Ear tag is required.</div>
+          }
+        </div>
+
+        <div class="col-12 col-md-6">
+          <label class="form-label">Sex *</label>
+          <select class="form-select" formControlName="sex">
+            <option value="Female">Female</option>
+            <option value="Male">Male</option>
+          </select>
+        </div>
+
+        <div class="col-12 col-md-6">
+          <label class="form-label">Pen *</label>
+          <input class="form-control" formControlName="pen" placeholder="Pen-A2" />
+          @if (form.controls.pen.invalid && form.controls.pen.touched) {
+            <div class="text-danger small mt-1">Pen is required.</div>
+          }
+        </div>
+
+        <div class="col-12 col-md-6">
+          <label class="form-label">Status *</label>
+          <select class="form-select" formControlName="status">
+            @for (status of statuses; track status) {
+              <option [value]="status">{{ status }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="col-12 col-md-6">
+          <label class="form-label">Weight (kg)</label>
+          <input class="form-control" type="number"  formControlName="weight" placeholder="540" />
+          @if (form.controls.weight.invalid && form.controls.weight.touched) {
+            <div class="text-danger small mt-1">Weight must be a positive number.</div>
+          }
+        </div>
+      </div>
+
+      @if (errorMessage()) {
+        <div class="alert alert-danger mt-3 mb-0">{{ errorMessage() }}</div>
+      }
+    </div>
+
+    <div class="card-footer bg-white border-0 pt-0 pb-3 px-3">
+      <button class="btn btn-primary" type="submit">Save Cow</button>
+    </div>
+  </form>
+</section>

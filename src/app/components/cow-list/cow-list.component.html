@@ -1,0 +1,80 @@
+<section>
+  <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+    <div>
+      <h1 class="h3 mb-0">Cow List</h1>
+    </div>
+    <a routerLink="/cows/new" class="btn btn-primary">Add Cow</a>
+  </div>
+
+  <div class="card shadow-sm mb-3">
+    <div class="card-body">
+      <div class="row g-3 align-items-end">
+        <div class="col-12 col-md-4">
+          <label class="form-label">Search by Ear Tag</label>
+          <input
+            type="text"
+            class="form-control"
+            [ngModel]="filters().search"
+            (ngModelChange)="onSearchInput($event)"
+            placeholder="e.g. TAG-1001"
+          />
+        </div>
+
+        <div class="col-12 col-md-3">
+          <label class="form-label">Status</label>
+          <select class="form-select" [ngModel]="filters().status" (ngModelChange)="onStatusChange($event)">
+            <option value="">All statuses</option>
+            @for (status of statuses; track status) {
+              <option [value]="status">{{ status }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="col-12 col-md-3">
+          <label class="form-label">Pen</label>
+          <select class="form-select" [ngModel]="filters().pen" (ngModelChange)="onPenChange($event)">
+            <option value="">All pens</option>
+            @for (pen of pens(); track pen) {
+              <option [value]="pen">{{ pen }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="col-12 col-md-2">
+          <button type="button" class="btn btn-outline-secondary w-100" (click)="clearFilters()">Clear</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow-sm">
+    <div class="table-responsive">
+      <table class="table table-hover align-middle mb-0">
+        <thead class="table-light">
+          <tr>
+            <th>Ear Tag</th>
+            <th>Sex</th>
+            <th>Pen</th>
+            <th>Status</th>
+            <th>Last Event Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (cow of cows(); track cow.id) {
+            <tr [routerLink]="['/cows', cow.id]" class="clickable-row">
+              <td class="fw-semibold">{{ cow.earTag }}</td>
+              <td>{{ cow.sex }}</td>
+              <td>{{ cow.pen }}</td>
+              <td><span class="badge" [ngClass]="statusBadgeClass(cow.status)">{{ cow.status }}</span></td>
+              <td>{{ cow.lastEventDate | date: 'mediumDate' }}</td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="5" class="text-center py-4 text-muted">No cows match the current filters.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

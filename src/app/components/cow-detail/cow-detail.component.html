@@ -1,0 +1,52 @@
+@if (cow(); as cowDetails) {
+  <section>
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+      <div>
+        <h1 class="h3 mb-0">Cow {{ cowDetails.earTag }}</h1>
+      </div>
+      <a routerLink="/cows" class="btn btn-outline-secondary">Back to list</a>
+    </div>
+
+    <div class="row g-3 mb-3">
+      <div class="col-12 col-lg-6">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h2 class="h5">Core Details</h2>
+            <p class="mb-2"><strong>Ear Tag:</strong> {{ cowDetails.earTag }}</p>
+            <p class="mb-2"><strong>Sex:</strong> {{ cowDetails.sex }}</p>
+            <p class="mb-2"><strong>Pen:</strong> {{ cowDetails.pen }}</p>
+            <p class="mb-0"><strong>Status:</strong> {{ cowDetails.status }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-6">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h2 class="h5">Weight Profile</h2>
+            <p class="mb-2"><strong>Current Weight:</strong> {{ cowDetails.weight ?? 'N/A' }} kg</p>
+            <p class="mb-2"><strong>Daily Weight Gain:</strong> {{ cowDetails.dailyWeightGain ?? 'N/A' }} kg/day</p>
+            <p class="mb-0"><strong>Last Event Date:</strong> {{ cowDetails.lastEventDate | date: 'mediumDate' }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h2 class="h5 mb-3">Recent Events</h2>
+        <ul class="list-group list-group-flush">
+          @for (event of cowDetails.events; track event.id) {
+            <li class="list-group-item px-0">
+              <div class="small text-muted">{{ event.date | date: 'mediumDate' }}</div>
+              <h3 class="h6 mb-1">{{ event.type }}</h3>
+              <p class="mb-0">{{ event.note }}</p>
+            </li>
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+} @else {
+  <div class="alert alert-warning">Cow not found.</div>
+}
