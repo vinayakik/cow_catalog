@@ -1,7 +1,8 @@
 # CowCatalog
 
 Steps to run the code:
-->Clone the code into your loacal.
+->Clone the code into your local.
+->Checkout to "master" branch
 ->Run "npm install" command to install the node_modules
 ->Run "ng serve" command to run the application in local on port "http://localhost:4200"
 
